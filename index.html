@@ -1,93 +1,484 @@
+<!--Welcome to my world, I'm a Full-stack developer, BI analyst & graphic designer helping businesses and startups thrive using data, design, and technology.-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jonathan — Full-Stack | BI | Designer</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jonathan — Full‑Stack Developer • BI Analyst • Graphic Designer</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- GSAP -->
+  <!-- GSAP + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <!-- Alpine.js -->
+  <!-- Alpine.js for small interactivity -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+  <meta name="description" content="Jonathan — Full‑Stack, BI Analyst & Designer — portfolio, projects, résumé, collaborations">
+
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
+    :root{
+      --accent: #2563eb; /* blue accent (change to your preferred 1-2 color system) */
+      --muted: rgba(15,23,42,0.06);
+      --glass-bg: rgba(255,255,255,0.75);
+      --glass-border: rgba(255,255,255,0.6);
+      --shadow: 0 10px 30px rgba(12,17,23,0.08);
+      --radius-lg: 18px;
+      --big: 64px;
     }
+
+    html,body{height:100%;}
+    body{
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg,#fbfdff 0%, #f6f9ff 100%);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+
+    /* Liquid glass / glassmorphism */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(245,247,250,0.6));
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      border: 1px solid rgba(13,20,30,0.06);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-lg);
+    }
+
+    /* Soft ambient blobs */
+    .ambient { position:relative; overflow:hidden; }
+    .ambient::before,
+    .ambient::after{
+      content:''; position:absolute; pointer-events:none; filter: blur(80px); opacity:0.35; transform:translateZ(0);
+    }
+    .ambient::before{
+      width:520px;height:520px; border-radius:50%; top:-120px; left:-120px;
+      background: radial-gradient(circle at 30% 30%, rgba(37,99,235,0.18), transparent 40%);
+      animation: floatA 12s ease-in-out infinite;
+    }
+    .ambient::after{
+      width:420px;height:420px; border-radius:50%; bottom:-140px; right:-160px;
+      background: radial-gradient(circle at 70% 70%, rgba(34,197,94,0.08), transparent 40%);
+      animation: floatB 14s ease-in-out infinite;
+    }
+    @keyframes floatA{ 0%{transform:translateY(0)} 50%{transform:translateY(18px)} 100%{transform:translateY(0)} }
+    @keyframes floatB{ 0%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-16px) rotate(10deg)} 100%{transform:translateY(0) rotate(0)} }
+
+    /* Large heading style */
+    .hero-title{ font-weight:900; letter-spacing:-0.02em; line-height:0.95; }
+
+    /* Glass card hover spotlight */
+    .glass:hover{ transform:translateY(-6px) scale(1.005); transition:transform .25s ease, box-shadow .25s ease; }
+
+    /* subtle image mask */
+    .img-mask{ border-radius:14px; overflow:hidden; }
+
+    /* timeline */
+    .timeline { position:relative; }
+    .timeline::before{ content:''; position:absolute; left:28px; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--accent), #a9c4ff); border-radius:3px; }
+
+    /* small utilities */
+    .accent{ color:var(--accent); }
+
+    /* modal overlay */
+    .modal-bg{ background: rgba(7,12,17,0.45); backdrop-filter: blur(6px); }
+
+    @media (max-width:768px){ :root{ --big:44px; } .hero-title{ font-size:40px; } }
   </style>
 </head>
+<body class="antialiased">
 
-<body class="bg-gray-900 text-white">
+  <!-- MAIN WRAPPER -->
+  <div class="min-h-screen w-full">
 
-  <!-- HERO -->
-  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-    <h1 class="text-5xl font-bold mb-4 opacity-0" id="hero-title">
-      Hi, I'm <span class="text-indigo-400">Jonathan</span>
-    </h1>
-    <p class="text-xl text-gray-300 max-w-2xl opacity-0" id="hero-sub">
-      Welcome to my world, I'm a Full-stack developer, BI analyst & graphic designer helping businesses and startups thrive using data, design, and technology.
-    </p>
-    <a href="#portfolio"
-      class="mt-10 inline-block bg-indigo-600 px-6 py-3 rounded-xl hover:bg-indigo-500 transition-all shadow-lg opacity-0"
-      id="hero-cta">View My Work</a>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="py-20 px-6" id="services">
-    <h2 class="text-3xl font-bold text-center mb-12">What I Do</h2>
-
-    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <div class="p-8 bg-gray-800 rounded-2xl shadow-lg hover:scale-105 transition transform">
-        <h3 class="text-xl font-bold mb-3">Full-Stack Dev</h3>
-        <p class="text-gray-400">I build robust, scalable apps with beautiful UX and clean architecture.</p>
+    <!-- NAV / TOPBAR -->
+    <nav class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-lg glass flex items-center justify-center text-xl font-bold">J</div>
+        <div class="text-sm">
+          <div class="font-semibold">Jonathan</div>
+          <div class="text-xs text-gray-500">Full‑Stack · BI · Design</div>
+        </div>
       </div>
 
-      <div class="p-8 bg-gray-800 rounded-2xl shadow-lg hover:scale-105 transition transform">
-        <h3 class="text-xl font-bold mb-3">Business Intelligence</h3>
-        <p class="text-gray-400">Data warehouses, dashboards, ETL, analytics, insights & automation.</p>
+      <div class="hidden md:flex items-center gap-6 text-sm text-slate-700">
+        <a class="hover:underline" href="#about">About</a>
+        <a class="hover:underline" href="#work">Work</a>
+        <a class="hover:underline" href="#startups">Startups</a>
+        <a class="hover:underline" href="#timeline">Timeline</a>
+        <a class="hover:underline" href="#contact">Contact</a>
+        <a href="#" class="px-4 py-2 rounded-lg glass border border-slate-100 text-sm">Résumé</a>
       </div>
 
-      <div class="p-8 bg-gray-800 rounded-2xl shadow-lg hover:scale-105 transition transform">
-        <h3 class="text-xl font-bold mb-3">Graphic Design</h3>
-        <p class="text-gray-400">Branding, UI design, pitch decks, creative direction & visual systems.</p>
+      <div class="md:hidden">
+        <button aria-label="menu" class="glass p-2 rounded-lg">☰</button>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- PORTFOLIO -->
-  <section class="py-20 px-6 bg-gray-950" id="portfolio">
-    <h2 class="text-3xl font-bold text-center mb-12">Portfolio</h2>
+    <!-- HERO -->
+    <header class="ambient px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-12 gap-8 items-center py-12">
 
-    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <div class="bg-gray-800 p-6 rounded-xl shadow-xl">
-        <h3 class="text-lg font-semibold mb-2">Project 1</h3>
-        <p class="text-gray-400">Description of your app, BI dashboard or design work.</p>
+        <div class="col-span-12 lg:col-span-7">
+          <div class="glass p-10 rounded-2xl">
+            <h1 class="hero-title text-6xl md:text-[5.5rem]">Designing with data<br class="hidden md:block"> & building with care.</h1>
+            <p class="mt-6 text-lg text-slate-600 max-w-xl">I help startups and enterprises ship high-quality products — combining full‑stack engineering, BI strategy, and clean product design to turn ideas into measurable growth.</p>
+
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href="#work" class="px-6 py-3 rounded-full border border-slate-100 glass font-semibold">Explore projects</a>
+              <a href="#contact" class="px-6 py-3 rounded-full text-white" style="background:linear-gradient(90deg,var(--accent),#60a5fa);">Work with me</a>
+            </div>
+
+            <div class="mt-8 flex items-center gap-6">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="avatar" class="w-14 h-14 rounded-full img-mask" />
+                <div>
+                  <div class="text-sm font-semibold">Jonathan —</div>
+                  <div class="text-xs text-slate-500">Previously @ startups, consultancies & agencies</div>
+                </div>
+              </div>
+
+              <div class="text-sm text-slate-500">📍 Based in Haiti · Available for remote & hybrid</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-5">
+          <div class="img-mask glass overflow-hidden p-0">
+            <picture>
+              <source srcset="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" media="(min-width:1024px)">
+              <img alt="work-preview" src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" />
+            </picture>
+          </div>
+        </div>
+
       </div>
-      <div class="bg-gray-800 p-6 rounded-xl shadow-xl">
-        <h3 class="text-lg font-semibold mb-2">Project 2</h3>
-        <p class="text-gray-400">Another example of your technical or creative work.</p>
-      </div>
-      <div class="bg-gray-800 p-6 rounded-xl shadow-xl">
-        <h3 class="text-lg font-semibold mb-2">Project 3</h3>
-        <p class="text-gray-400">Show results, numbers, designs, dashboards, code.</p>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- FOOTER -->
-  <footer class="py-10 text-center text-gray-500">
-    © 2025 Jonathan — Crafted with passion.
-  </footer>
+    <!-- ABOUT / PARCOURS -->
+    <section id="about" class="max-w-6xl mx-auto px-6 py-20">
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-4xl font-extrabold">About & Academic parcours</h2>
+          <p class="mt-6 text-slate-600 max-w-xl">I studied Computer Science & Data Analytics, then moved into full‑product delivery: engineering, BI, and product design. I focus on building systems that are maintainable and beautiful — from data warehouses and dashboards to polished user interfaces.</p>
 
-  <!-- GSAP Animations -->
+          <ul class="mt-6 space-y-3 text-slate-600">
+            <li>🎓 Degree: B.Sc. Computer Science / Data Analytics</li>
+            <li>🔧 Tools: Python, Node.js, React, Postgres, dbt, Airflow, Looker / Superset</li>
+            <li>🎨 Design: Figma, Adobe Suite, Principle</li>
+          </ul>
+
+          <div class="mt-8 flex gap-4">
+            <a href="#timeline" class="glass px-5 py-3 rounded-lg">My journey →</a>
+            <a href="#work" class="px-5 py-3 rounded-lg" style="background:linear-gradient(90deg,var(--accent),#60a5fa); color:white;">See case studies</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="glass p-6 rounded-2xl">
+            <h4 class="font-semibold text-lg">Key numbers</h4>
+            <div class="mt-4 grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div class="text-2xl font-bold">+8</div>
+                <div class="text-xs text-slate-500">Years experience</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold">+30</div>
+                <div class="text-xs text-slate-500">Projects shipped</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold">+12</div>
+                <div class="text-xs text-slate-500">Startups collaborated</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 glass p-6 rounded-2xl">
+            <h4 class="font-semibold text-lg">Skills</h4>
+            <div class="mt-4 space-y-3">
+              <div>
+                <div class="flex justify-between text-xs text-slate-500"><span>Engineering</span><span>90%</span></div>
+                <div class="w-full h-2 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full" style="width:90%; background:linear-gradient(90deg,var(--accent),#60a5fa);"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-slate-500"><span>BI & Analytics</span><span>88%</span></div>
+                <div class="w-full h-2 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full" style="width:88%; background:linear-gradient(90deg,#10b981,#60a5fa);"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-slate-500"><span>Design</span><span>82%</span></div>
+                <div class="w-full h-2 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full" style="width:82%; background:linear-gradient(90deg,#f97316,#60a5fa);"></div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK / CASE STUDIES -->
+    <section id="work" class="py-20 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-extrabold text-center">Selected projects & case studies</h2>
+
+        <div class="mt-12 grid md:grid-cols-3 gap-10">
+
+          <!-- Project Card (repeatable) -->
+          <article class="glass p-6 rounded-2xl">
+            <div class="img-mask mb-4">
+              <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="proj" class="w-full h-40 object-cover" />
+            </div>
+            <h3 class="text-xl font-semibold">Analytics Dashboard — Retail</h3>
+            <p class="mt-2 text-sm text-slate-600">Full data pipeline, BI model, and a real-time dashboard that reduced churn by 12%.</p>
+            <div class="mt-4 flex gap-3">
+              <button class="px-4 py-2 rounded-full glass text-sm" onclick="openModal('case1')">View case</button>
+              <a class="px-4 py-2 rounded-full text-sm" style="background:linear-gradient(90deg,var(--accent),#60a5fa); color:white;" href="#">Live →</a>
+            </div>
+          </article>
+
+          <article class="glass p-6 rounded-2xl">
+            <div class="img-mask mb-4">
+              <img src="https://images.unsplash.com/photo-1506851099891-795f5b0f9b25?q=80&w=1200&auto=format&fit=crop" alt="proj" class="w-full h-40 object-cover" />
+            </div>
+            <h3 class="text-xl font-semibold">Product Launch Webapp</h3>
+            <p class="mt-2 text-sm text-slate-600">Design system, frontend + backend, conversion focused flow for launch campaigns.</p>
+            <div class="mt-4 flex gap-3">
+              <button class="px-4 py-2 rounded-full glass text-sm" onclick="openModal('case2')">View case</button>
+              <a class="px-4 py-2 rounded-full text-sm" style="background:linear-gradient(90deg,var(--accent),#60a5fa); color:white;" href="#">Repo</a>
+            </div>
+          </article>
+
+          <article class="glass p-6 rounded-2xl">
+            <div class="img-mask mb-4">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="proj" class="w-full h-40 object-cover" />
+            </div>
+            <h3 class="text-xl font-semibold">Brand & Design System</h3>
+            <p class="mt-2 text-sm text-slate-600">Identity, design tokens, and UI components used across web and mobile.</p>
+            <div class="mt-4 flex gap-3">
+              <button class="px-4 py-2 rounded-full glass text-sm" onclick="openModal('case3')">View case</button>
+              <a class="px-4 py-2 rounded-full text-sm" style="background:linear-gradient(90deg,var(--accent),#60a5fa); color:white;" href="#">Gallery</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- STARTUPS & COLLABS -->
+    <section id="startups" class="py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-extrabold text-center">Startups & collaborations</h2>
+        <p class="text-center mt-4 text-slate-600 max-w-2xl mx-auto">I've partnered with early-stage teams and product leaders to build MVPs, growth features and analytics foundations.</p>
+
+        <div class="mt-10 grid md:grid-cols-4 gap-6">
+          <div class="glass p-4 rounded-2xl text-center">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=400&auto=format&fit=crop" class="w-20 h-20 rounded-lg mx-auto object-cover mb-3" />
+            <div class="text-sm font-semibold">Starterly</div>
+            <div class="text-xs text-slate-500">MVP & analytics</div>
+          </div>
+          <div class="glass p-4 rounded-2xl text-center">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=400&auto=format&fit=crop" class="w-20 h-20 rounded-lg mx-auto object-cover mb-3" />
+            <div class="text-sm font-semibold">MarketLoop</div>
+            <div class="text-xs text-slate-500">Growth & infra</div>
+          </div>
+          <div class="glass p-4 rounded-2xl text-center">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400&auto=format&fit=crop" class="w-20 h-20 rounded-lg mx-auto object-cover mb-3" />
+            <div class="text-sm font-semibold">Brandly</div>
+            <div class="text-xs text-slate-500">Design system</div>
+          </div>
+          <div class="glass p-4 rounded-2xl text-center">
+            <img src="https://images.unsplash.com/photo-1554735493-3bcd7f5f9b77?q=80&w=400&auto=format&fit=crop" class="w-20 h-20 rounded-lg mx-auto object-cover mb-3" />
+            <div class="text-sm font-semibold">FinData</div>
+            <div class="text-xs text-slate-500">BI & dashboards</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline" class="py-20 px-6 bg-gray-50">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-extrabold text-center">Career timeline</h2>
+        <div class="mt-10 timeline">
+          <div class="space-y-8 pl-12">
+
+            <div class="relative">
+              <div class="absolute -left-3 top-1 w-6 h-6 rounded-full bg-white border border-slate-200"></div>
+              <div class="glass p-6 rounded-2xl">
+                <div class="flex justify-between">
+                  <div>
+                    <div class="text-sm text-slate-500">2024 — Present</div>
+                    <div class="font-semibold">Lead BI Engineer · FinData</div>
+                    <div class="text-sm text-slate-600 mt-2">Built the data foundation and dashboards powering merchant growth.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative">
+              <div class="absolute -left-3 top-1 w-6 h-6 rounded-full bg-white border border-slate-200"></div>
+              <div class="glass p-6 rounded-2xl">
+                <div class="flex justify-between">
+                  <div>
+                    <div class="text-sm text-slate-500">2021 — 2024</div>
+                    <div class="font-semibold">Senior Full‑Stack · MarketLoop</div>
+                    <div class="text-sm text-slate-600 mt-2">Led product features and conversion experiments.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative">
+              <div class="absolute -left-3 top-1 w-6 h-6 rounded-full bg-white border border-slate-200"></div>
+              <div class="glass p-6 rounded-2xl">
+                <div class="flex justify-between">
+                  <div>
+                    <div class="text-sm text-slate-500">2018 — 2021</div>
+                    <div class="font-semibold">Product Engineer · Starterly</div>
+                    <div class="text-sm text-slate-600 mt-2">Built MVPs, payment flows & analytics pipelines.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-20 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-extrabold text-center">Let's build something</h2>
+        <p class="text-center mt-4 text-slate-600">I'm available for product work, consulting and board/advisor roles.</p>
+
+        <div class="mt-8 glass p-8 rounded-2xl">
+          <form id="contactForm" onsubmit="event.preventDefault(); submitContact();" class="grid gap-4 md:grid-cols-2">
+            <input required name="name" placeholder="Your name" class="p-3 rounded-lg border border-slate-100" />
+            <input required name="email" type="email" placeholder="Email" class="p-3 rounded-lg border border-slate-100" />
+            <input name="company" placeholder="Company (optional)" class="p-3 rounded-lg border border-slate-100 md:col-span-2" />
+            <textarea required name="message" placeholder="Tell me about your project" class="p-3 rounded-lg border border-slate-100 md:col-span-2 h-32"></textarea>
+
+            <div class="md:col-span-2 flex justify-between items-center">
+              <div class="text-sm text-slate-500">Or email: <a href="mailto:jonathan@example.com" class="accent">jonathan@example.com</a></div>
+              <button type="submit" class="px-6 py-3 rounded-full" style="background:linear-gradient(90deg,var(--accent),#60a5fa); color:white;">Send message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 text-center text-sm text-slate-500">
+      © 2025 Jonathan — crafted with precision. • <a href="#" class="hover:underline">Privacy</a>
+    </footer>
+
+  </div>
+
+  <!-- MODALS (CASE STUDIES) -->
+  <div id="modalRoot"></div>
+
   <script>
-    gsap.to("#hero-title", { y: -20, opacity: 1, duration: 1 });
-    gsap.to("#hero-sub", { y: -20, opacity: 1, delay: 0.3, duration: 1 });
-    gsap.to("#hero-cta", { y: -20, opacity: 1, delay: 0.6, duration: 1 });
+    /* ---------- Small UI helpers ---------- */
+    function openModal(id){
+      const root = document.getElementById('modalRoot');
+      const html = {
+        case1: `
+          <div class="fixed inset-0 z-50 flex items-center justify-center modal-bg">
+            <div class="w-full max-w-3xl p-8 glass rounded-2xl">
+              <div class="flex justify-between items-start">
+                <h3 class="text-2xl font-bold">Analytics Dashboard — Retail</h3>
+                <button onclick="closeModal()" class="text-slate-600">✕</button>
+              </div>
+              <p class="mt-4 text-slate-600">End-to-end analytics system: ETL, modeling, and a realtime dashboard. Outcomes: reduced churn, improved LTV calculations.</p>
+              <div class="mt-6 grid md:grid-cols-2 gap-4">
+                <img src='https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=900&auto=format&fit=crop' class='w-full object-cover rounded-lg' />
+                <div>
+                  <h4 class="font-semibold">Responsibilities</h4>
+                  <ul class="mt-2 text-slate-600 list-disc ml-5">
+                    <li>Data modeling & dbt transformations</li>
+                    <li>Real-time dashboarding</li>
+                    <li>AB test instrumentation</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `,
+        case2: `
+          <div class="fixed inset-0 z-50 flex items-center justify-center modal-bg">
+            <div class="w-full max-w-3xl p-8 glass rounded-2xl">
+              <div class="flex justify-between items-start">
+                <h3 class="text-2xl font-bold">Product Launch Webapp</h3>
+                <button onclick="closeModal()" class="text-slate-600">✕</button>
+              </div>
+              <p class="mt-4 text-slate-600">Designed & built a conversion-optimized launch application. Handled payments, analytics, and multi-variant flows.</p>
+            </div>
+          </div>
+        `,
+        case3: `
+          <div class="fixed inset-0 z-50 flex items-center justify-center modal-bg">
+            <div class="w-full max-w-3xl p-8 glass rounded-2xl">
+              <div class="flex justify-between items-start">
+                <h3 class="text-2xl font-bold">Brand & Design System</h3>
+                <button onclick="closeModal()" class="text-slate-600">✕</button>
+              </div>
+              <p class="mt-4 text-slate-600">Identity, design tokens, and components shipped to web and mobile teams.</p>
+            </div>
+          </div>
+        `
+      };
+
+      root.innerHTML = html[id] || '';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      document.getElementById('modalRoot').innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    /* ---------- fake contact submit ---------- */
+    function submitContact(){
+      const form = document.getElementById('contactForm');
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true; btn.innerText = 'Sending...';
+      setTimeout(()=>{ btn.disabled = false; btn.innerText = 'Send message'; alert('Thanks! I\'ll get back to you soon. (This is a demo form)'); form.reset(); }, 900);
+    }
+
+    /* ---------- GSAP: entrance and scroll animations ---------- */
+    gsap.registerPlugin(ScrollTrigger);
+
+    // hero entrance
+    gsap.from('.hero-title', { y: 20, opacity: 0, duration: 1, ease: 'power3.out' });
+    gsap.from('.glass', { y: 8, opacity: 0, stagger: 0.06, duration: 0.8, delay: 0.15, ease: 'power2.out' });
+
+    // fade-up on scroll
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section, {
+        scrollTrigger: { trigger: section, start: 'top 85%' },
+        y: 18, opacity: 0, duration: 0.8, ease: 'power2.out'
+      });
+    });
+
+    // small hover glow on cards
+    document.querySelectorAll('.glass').forEach(card => {
+      card.addEventListener('mousemove', (e)=>{
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+        card.style.setProperty('--mx', x + 'px');
+        card.style.setProperty('--my', y + 'px');
+      });
+    });
+
   </script>
 
 </body>
