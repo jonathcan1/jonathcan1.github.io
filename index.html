@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ darkMode: JSON.parse(localStorage.getItem('darkMode')) ?? true }"
+      x-init="$watch('darkMode', v => localStorage.setItem('darkMode', v))"
+      :class="darkMode ? 'dark' : ''">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jonathan — Liquid Glass Portfolio</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    /*Glassmorphism effect */
+    .glass {
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /*Ambient Light Glow */
+    .ambient {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ambient::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -40%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle,
+          rgba(99, 102, 241, 0.25),
+          transparent 70%);
+      animation: glow 12s infinite linear;
+      filter: blur(60px);
+    }
+
+    @keyframes glow {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Glass hover */
+    .glass:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-4px);
+      transition: 0.2s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 dark:bg-gray-950 transition">
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center px-6 py-6 max-w-6xl mx-auto">
+    <h1 class="text-3xl font-black tracking-tight">J.</h1>
+
+    <button @click="darkMode = !darkMode"
+      class="glass px-4 py-2 rounded-xl text-sm hover:bg-white/10 transition">
+      <span x-show="darkMode">🌞 Light</span>
+      <span x-show="!darkMode">🌙 Dark</span>
+    </button>
+  </header>
+
+  <!-- HERO SECTION (AMBIENT LIGHT) -->
+  <section class="ambient min-h-[85vh] flex flex-col justify-center items-center text-center px-6">
+
+    <h2 id="hero-title"
+      class="text-7xl md:text-[6rem] font-black tracking-tight leading-tight opacity-0">
+      Liquid Glass<br>Minimal Tech.
+    </h2>
+
+    <p id="hero-sub"
+      class="mt-6 text-2xl max-w-2xl text-gray-400 opacity-0">
+      Full-stack development, BI analytics and clean design — shaping digital experiences for modern businesses.
+    </p>
+
+    <a id="hero-cta" href="#work"
+      class="mt-10 inline-block px-10 py-4 text-xl rounded-2xl glass border border-white/10 opacity-0">
+      Explore →
+    </a>
+
+  </section>
+
+  <!-- SERVICES (GLASS CARDS) -->
+  <section id="services" class="py-24 px-6 max-w-6xl mx-auto">
+    <h3 class="text-5xl font-bold text-center mb-20 tracking-tight">Expertise</h3>
+
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <div class="glass p-10 rounded-3xl shadow-xl border border-white/10">
+        <h4 class="text-3xl font-semibold mb-3">Full-Stack Dev</h4>
+        <p class="text-gray-400 text-lg">Clean architecture, scalable apps & sleek UI.</p>
+      </div>
+
+      <div class="glass p-10 rounded-3xl shadow-xl border border-white/10">
+        <h4 class="text-3xl font-semibold mb-3">Business Intelligence</h4>
+        <p class="text-gray-400 text-lg">Data pipelines, dashboards & powerful insights.</p>
+      </div>
+
+      <div class="glass p-10 rounded-3xl shadow-xl border border-white/10">
+        <h4 class="text-3xl font-semibold mb-3">Design & Branding</h4>
+        <p class="text-gray-400 text-lg">Clean visuals, product UI, minimalist design systems.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WORK SECTION (AMBIENT LIGHT SLIGHT) -->
+  <section id="work" class="ambient py-24 px-6 bg-gray-900/40">
+
+    <h3 class="text-5xl font-bold text-center mb-20 tracking-tight">Selected Work</h3>
+
+    <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+
+      <div class="glass p-8 rounded-3xl border border-white/10">
+        <h4 class="text-2xl font-semibold mb-2">Project 01</h4>
+        <p class="text-gray-400">A fusion of design, engineering & analytics.</p>
+      </div>
+
+      <div class="glass p-8 rounded-3xl border border-white/10">
+        <h4 class="text-2xl font-semibold mb-2">Project 02</h4>
+        <p class="text-gray-400">Modern BI dashboard with clean UX.</p>
+      </div>
+
+      <div class="glass p-8 rounded-3xl border border-white/10">
+        <h4 class="text-2xl font-semibold mb-2">Project 03</h4>
+        <p class="text-gray-400">Minimalist branding & web experience.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-10 text-center text-gray-500 text-lg">
+    © 2025 Jonathan — Designed with passion.
+  </footer>
+
+  <!-- GSAP ANIMATIONS -->
+  <script>
+    gsap.to("#hero-title", { opacity: 1, y: -20, duration: 1 });
+    gsap.to("#hero-sub", { opacity: 1, y: -20, delay: 0.3, duration: 1 });
+    gsap.to("#hero-cta", { opacity: 1, y: -20, delay: 0.6, duration: 1 });
+  </script>
+
+</body>
+</html>
